@@ -15,8 +15,8 @@ require(__DIR__ . "/../vendor/autoload.php");
 		<title>Solid State by HTML5 UP</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<link rel="stylesheet" href="templates/solid-state/assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="templates/solid-state/assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
 
@@ -68,7 +68,7 @@ require(__DIR__ . "/../vendor/autoload.php");
                         <?php
                         $section = new Spotlight(
                             class: "style1",
-                            image: "images/pic01.jpg",
+                            image: "templates/solid-state/images/pic01.jpg",
                             title: "This is a title",
                             text: "This is some sample text",
                             link_url: "#",
@@ -79,7 +79,7 @@ require(__DIR__ . "/../vendor/autoload.php");
 
                         $section = new Spotlight(
                             class: "alt style2",
-                            image: "images/pic01.jpg",
+                            image: "templates/solid-state/images/pic01.jpg",
                             title: "This is a title 2",
                             text: "This is some sample text 2",
                             link_url: "#",
@@ -90,7 +90,7 @@ require(__DIR__ . "/../vendor/autoload.php");
 
                         $section = new Spotlight(
                             class: "style1",
-                            image: "images/pic01.jpg",
+                            image: "templates/solid-state/images/pic01.jpg",
                             title: "Third spotlight",
                             text: "Yay! Lorem ipsum dolor sit amet, etiam lorem adipiscing elit. Cras turpis ante, nullam sit amet turpis non, sollicitudin posuere urna. Mauris id tellus arcu. Nunc vehicula id nulla dignissim dapibus. Nullam ultrices, neque et faucibus viverra, ex nulla cursus.",
                             link_url: "#",
@@ -102,35 +102,35 @@ require(__DIR__ . "/../vendor/autoload.php");
 
                         $articles = [
                             new Article(
-                                image: "images/pic03.jpg",
+                                image: "templates/solid-state/images/pic03.jpg",
                                 title: "Article title",
                                 text: "Some text goes here",
                                 link_url: "#",
                                 link_text: "Click here",
                             ),
                             new Article(
-                                image: "images/pic03.jpg",
+                                image: "templates/solid-state/images/pic03.jpg",
                                 title: "Article title",
                                 text: "Some text goes here",
                                 link_url: "#",
                                 link_text: "Click here",
                             ),
                             new Article(
-                                image: "images/pic03.jpg",
+                                image: "templates/solid-state/images/pic03.jpg",
                                 title: "Article title",
                                 text: "Some text goes here",
                                 link_url: "#",
                                 link_text: "Click here",
                             ),
                             new Article(
-                                image: "images/pic03.jpg",
+                                image: "templates/solid-state/images/pic03.jpg",
                                 title: "Article title",
                                 text: "Some text goes here",
                                 link_url: "#",
                                 link_text: "Click here",
                             ),
                             new Article(
-                                image: "images/pic03.jpg",
+                                image: "templates/solid-state/images/pic03.jpg",
                                 title: "Article title",
                                 text: "Some text goes here",
                                 link_url: "#",
@@ -201,12 +201,12 @@ require(__DIR__ . "/../vendor/autoload.php");
 			</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<script src="templates/solid-state/assets/js/jquery.min.js"></script>
+			<script src="templates/solid-state/assets/js/jquery.scrollex.min.js"></script>
+			<script src="templates/solid-state/assets/js/browser.min.js"></script>
+			<script src="templates/solid-state/assets/js/breakpoints.min.js"></script>
+			<script src="templates/solid-state/assets/js/util.js"></script>
+			<script src="templates/solid-state/assets/js/main.js"></script>
 
 	</body>
 </html>
