@@ -1,0 +1,15 @@
+{
+    "name": "unconv/custom-cms",
+    "autoload": {
+        "psr-4": {
+            "Unconv\\CustomCms\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "unconv",
+            "email": "unconventionalcoding@gmail.com"
+        }
+    ],
+    "require": {}
+}
