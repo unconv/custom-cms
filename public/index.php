@@ -1,7 +1,11 @@
 <?php
 namespace Unconv\CustomCms;
+use PDO;
 
 require(__DIR__ . "/../vendor/autoload.php");
+
+$db = new PDO( "mysql:host=localhost;dbname=customcms", "admin", "admin" );
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
 ?>
 <!DOCTYPE HTML>
@@ -20,185 +24,10 @@ require(__DIR__ . "/../vendor/autoload.php");
 	</head>
 	<body class="is-preload">
 
-		<!-- Page Wrapper -->
-			<div id="page-wrapper">
-
-				<?php
-                $header = new Header(
-                    heading: "Something Else",
-                    menu_name: "The Menu",
-                );
-
-                echo $header->render();
-
-                $links = [
-                    [
-                        "url" => "index.html",
-                        "text" => "Front page",
-                    ],
-                    [
-                        "url" => "generic.html",
-                        "text" => "Generic",
-                    ],
-                    [
-                        "url" => "elements.html",
-                        "text" => "Elements",
-                    ]
-                ];
-
-                $menu = new Menu(
-                    title: "The menu",
-                    links: $links,
-                    close_text: "Close",
-                );
-
-                echo $menu->render();
-
-                $banner = new Banner(
-                    heading: "This is cool!",
-                    text: "This is a very cool website.",
-                );
-
-                echo $banner->render();
-                ?>
-
-				<!-- Wrapper -->
-					<section id="wrapper">
-
-                        <?php
-                        $section = new Spotlight(
-                            class: "style1",
-                            image: "templates/solid-state/images/pic01.jpg",
-                            title: "This is a title",
-                            text: "This is some sample text",
-                            link_url: "#",
-                            link_text: "Click here now",
-                        );
-
-                        echo $section->render();
-
-                        $section = new Spotlight(
-                            class: "alt style2",
-                            image: "templates/solid-state/images/pic01.jpg",
-                            title: "This is a title 2",
-                            text: "This is some sample text 2",
-                            link_url: "#",
-                            link_text: "Click here now",
-                        );
-
-                        echo $section->render();
-
-                        $section = new Spotlight(
-                            class: "style1",
-                            image: "templates/solid-state/images/pic01.jpg",
-                            title: "Third spotlight",
-                            text: "Yay! Lorem ipsum dolor sit amet, etiam lorem adipiscing elit. Cras turpis ante, nullam sit amet turpis non, sollicitudin posuere urna. Mauris id tellus arcu. Nunc vehicula id nulla dignissim dapibus. Nullam ultrices, neque et faucibus viverra, ex nulla cursus.",
-                            link_url: "#",
-                            link_text: "Click here now",
-                        );
-
-                        echo $section->render();
-
-
-                        $articles = [
-                            new Article(
-                                image: "templates/solid-state/images/pic03.jpg",
-                                title: "Article title",
-                                text: "Some text goes here",
-                                link_url: "#",
-                                link_text: "Click here",
-                            ),
-                            new Article(
-                                image: "templates/solid-state/images/pic03.jpg",
-                                title: "Article title",
-                                text: "Some text goes here",
-                                link_url: "#",
-                                link_text: "Click here",
-                            ),
-                            new Article(
-                                image: "templates/solid-state/images/pic03.jpg",
-                                title: "Article title",
-                                text: "Some text goes here",
-                                link_url: "#",
-                                link_text: "Click here",
-                            ),
-                            new Article(
-                                image: "templates/solid-state/images/pic03.jpg",
-                                title: "Article title",
-                                text: "Some text goes here",
-                                link_url: "#",
-                                link_text: "Click here",
-                            ),
-                            new Article(
-                                image: "templates/solid-state/images/pic03.jpg",
-                                title: "Article title",
-                                text: "Some text goes here",
-                                link_url: "#",
-                                link_text: "Click here",
-                            ),
-                        ];
-
-                        $articleblock = new ArticleBlock(
-                            title: "The articles",
-                            text: "Here's some articles",
-                            articles: $articles,
-                            link_url: "#",
-                            link_text: "Read more here",
-                        );
-
-                        echo $articleblock->render();
-                        ?>
-
-					</section>
-
-                <?php
-                $links = [
-                    new FooterLink(
-                        type: "facebook",
-                        url: "https://facebook.com",
-                        link_name: "Our Facebook Page",
-                    ),
-                    new FooterLink(
-                        type: "twitter",
-                        url: "https://twitter.com",
-                        link_name: "Our Twitter Page",
-                    ),
-                ];
-
-                $form = new Form(
-                    action: "/",
-                    submit_text: "Submit form",
-                );
-
-                $form->add_field( new FormField(
-                    type: "text",
-                    label: "Name",
-                ) );
-
-                $form->add_field( new FormField(
-                    type: "text",
-                    label: "Email",
-                ) );
-
-                $form->add_field( new FormField(
-                    type: "textarea",
-                    label: "Message",
-                ) );
-
-                $footer = new Footer(
-                    heading: "Get in touch",
-                    text: "You can get in touch by the for below",
-                    address: "Address line 1\nAddress line 2",
-                    phone: "1234567890",
-                    email: "unconventionalcoding@gmail.com",
-                    links: $links,
-                    copyright: "My Company Ltd",
-                    form: $form,
-                );
-
-                echo $footer->render();
-                ?>
-			</div>
+        <?php
+        $page = Page::from_db( 1, $db );
+        echo $page->render();
+        ?>
 
 		<!-- Scripts -->
 			<script src="templates/solid-state/assets/js/jquery.min.js"></script>
@@ -210,3 +39,6 @@ require(__DIR__ . "/../vendor/autoload.php");
 
 	</body>
 </html>
+<?php
+$page->save( $db );
+?>
