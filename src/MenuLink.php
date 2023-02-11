@@ -15,12 +15,4 @@ class MenuLink extends Element
     public function get_text(): string {
         return $this->text;
     }
-
-    public function render(): string {
-        return '<li><a href="'.htmlspecialchars( $this->url ).'">'.htmlspecialchars( $this->text ).'</a></li>';
-    }
-
-    public function get_element_type(): ElementTypes {
-        return ElementTypes::MenuLink;
-    }
 }

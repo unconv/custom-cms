@@ -15,8 +15,4 @@ class Banner extends Element
     public function get_text(): string {
         return $this->text;
     }
-
-    public function get_element_type(): ElementTypes {
-        return ElementTypes::Banner;
-    }
 }

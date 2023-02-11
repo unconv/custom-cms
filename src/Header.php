@@ -15,8 +15,4 @@ class Header extends Element
     public function get_menu_name(): string {
         return $this->menu_name;
     }
-
-    public function get_element_type(): ElementTypes {
-        return ElementTypes::Header;
-    }
 }

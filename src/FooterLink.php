@@ -9,11 +9,15 @@ class FooterLink extends Element
         private string $link_name,
     ) {}
 
-    public function render(): string {
-        return '<li class="icon brands fa-'.$this->type.'"><a href="'.$this->url.'">'.$this->link_name.'</a></li>';
+    public function get_type(): string {
+        return $this->type;
     }
 
-    public function get_element_type(): ElementTypes {
-        return ElementTypes::FooterLink;
+    public function get_url(): string {
+        return $this->url;
+    }
+
+    public function get_link_name(): string {
+        return $this->link_name;
     }
 }

@@ -13,25 +13,15 @@ class Form extends Element
         $this->fields[] = $field;
     }
 
-    public function render(): string {
-        $rendered = '<form method="post" action="'.$this->action.'">
-        <div class="fields">';
-
-        foreach( $this->fields as $field ) {
-            $rendered .= $field->render();
-        }
-
-        $rendered .= '
-            </div>
-            <ul class="actions">
-                <li><input type="submit" value="'.$this->submit_text.'" /></li>
-            </ul>
-        </form>';
-
-        return $rendered;
+    public function get_action(): string {
+        return $this->action;
     }
 
-    public function get_element_type(): ElementTypes {
-        return ElementTypes::Form;
+    public function get_submit_text(): string {
+        return $this->submit_text;
+    }
+
+    public function get_fields(): array {
+        return $this->fields;
     }
 }

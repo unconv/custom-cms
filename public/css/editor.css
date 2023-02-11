@@ -1,0 +1,16 @@
+.edit-input {
+    font-size: inherit !important;
+    font-family: inherit !important;
+    border: none !important;
+    background: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    color: inherit !important;
+    text-decoration: inherit !important;
+    font-weight: inherit !important;
+    text-transform: inherit !important;
+    line-height: inherit !important;
+    text-align: inherit !important;
+    padding: 0 !important;
+    height: inherit !important;
+}

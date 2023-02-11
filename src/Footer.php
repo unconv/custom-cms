@@ -22,7 +22,14 @@ class Footer extends Element
         return $this->text;
     }
 
-    public function get_address(): string {
+    public function get_address( ViewContext $context = ViewContext::View ): string {
+        if( $context === ViewContext::Edit ) {
+            return $this->address;
+        }
+        return $this->get_formatted_address();
+    }
+
+    public function get_formatted_address(): string {
         return nl2br( $this->address );
     }
 
@@ -48,9 +55,5 @@ class Footer extends Element
 
     public function get_form(): Form {
         return $this->form;
-    }
-
-    public function get_element_type(): ElementTypes {
-        return ElementTypes::Footer;
     }
 }

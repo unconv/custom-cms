@@ -35,8 +35,4 @@ class Spotlight extends Element
     public function get_link_text(): string {
         return $this->link_text;
     }
-
-    public function get_element_type(): ElementTypes {
-        return ElementTypes::Spotlight;
-    }
 }

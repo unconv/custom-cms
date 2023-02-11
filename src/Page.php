@@ -85,9 +85,13 @@ class Page
         $element_list = [];
 
         foreach( $elements as $element ) {
-            $element = json_decode( $element['data'] );
-            $element_class = Element::get_element_class( $element );
-            $element_list[] = $element_class::from_json( $element );
+            $json = json_decode( $element['data'] );
+            $element_class = Element::get_element_class( $json );
+
+            $object = $element_class::from_json( $json );
+            $object->set_id( $element['id'] );
+
+            $element_list[] = $object;
         }
 
         return $element_list;
@@ -101,9 +105,9 @@ class Page
         $footer = "";
 
         foreach( $this->get_elements() as $element ) {
-            if( $element->get_element_type() === ElementTypes::Footer ) {
+            if( $element instanceof Footer ) {
                 $footer .= $element->render();
-            } elseif( $element->get_element_type() === ElementTypes::Spotlight ) {
+            } elseif( $element instanceof Spotlight ) {
                 $wrapper .= $element->render();
             } else {
                 $top_content .= $element->render();

@@ -21,9 +21,10 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="templates/solid-state/assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="templates/solid-state/assets/css/noscript.css" /></noscript>
+		<link rel="stylesheet" href="css/editor.css" />
 	</head>
 	<body class="is-preload">
-
+		<form method="post" action="/save.php">
         <?php
         $page = Page::from_db( 1, $db );
         echo $page->render();
@@ -36,7 +37,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 			<script src="templates/solid-state/assets/js/breakpoints.min.js"></script>
 			<script src="templates/solid-state/assets/js/util.js"></script>
 			<script src="templates/solid-state/assets/js/main.js"></script>
-
+		</form>
 	</body>
 </html>
 <?php

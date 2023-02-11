@@ -6,9 +6,17 @@ use stdClass;
 
 abstract class Element {
     protected int $id;
+    protected ViewContext $context = ViewContext::Edit;
+
+    public static int $global_index = 0;
+    public int $index;
 
     public function set_id( int $id ) {
         $this->id = $id;
+    }
+
+    public function set_context( ViewContext $context ) {
+        $this->context = $context;
     }
 
     public function save( PDO $db, int $page_id ) {
@@ -29,7 +37,7 @@ abstract class Element {
 
             $stmt->execute( [
                 ":page" => $page_id,
-                ":type" => $this->get_element_type()->value,
+                ":type" => $this->get_enum_value(),
                 ":data" => $this->get_json(),
                 ":weight" => 0,
             ] );
@@ -38,12 +46,21 @@ abstract class Element {
         }
     }
 
-    public function render(): string {
-        $reflect = new ReflectionClass( $this );
+    public function render( ?Element $parent = null ): string {
+        static::$global_index++;
 
-        $template_name = strtolower( $reflect->getShortName() );
+        if( ! isset( $this->index ) ) {
+            $this->index = static::$global_index;
+        }
 
-        $template = file_get_contents( __DIR__ . "/../templates/solid-state/elements/".$template_name.".html" );
+        $template_name = strtolower( $this->get_short_classname() );
+
+        $prefix = "";
+        if( $this->context === ViewContext::Edit ) {
+            $prefix = "edit-";
+        }
+
+        $template = file_get_contents( __DIR__ . "/../templates/solid-state/".$prefix."elements/".$template_name.".html" );
 
         $properties = static::get_properties( $this );
 
@@ -51,7 +68,7 @@ abstract class Element {
             $getter = "get_" . $property;
             $placeholder = "{".strtoupper( $property )."}";
 
-            $value = $this->$getter();
+            $value = $this->$getter( $this->context );
 
             if( is_array( $value ) ) {        
                 $rendered = "";
@@ -61,17 +78,35 @@ abstract class Element {
                         $element_class = static::get_element_class( $element );
                         $element = $element_class::from_json( $element );
                     }
-                    $rendered .= $element->render();
+                    $rendered .= $element->render( $this );
                 }
         
                 $value = $rendered;
             } elseif( $value instanceof Element ) {
-                $value = $value->render();
+                $value = $value->render( $this );
             }
 
             $template = str_replace(
                 $placeholder,
                 $value,
+                $template
+            );
+        }
+
+        if( $this->context === ViewContext::Edit ) {
+            if( isset( $this->id ) ) {
+                $template .= '<input type="hidden" name="element[][_id]" value="'.$this->id.'" />';
+            }
+
+            if( isset( $parent ) ) {
+                $template .= '<input type="hidden" name="element[][_parent]" value="'.$parent->index.'" />';
+            }
+
+            $template .= '<input type="hidden" name="element[][_type]" value="'.$this->get_enum_value().'" />';
+
+            $template = str_replace(
+                "element[]",
+                "element[".$this->index."]",
                 $template
             );
         }
@@ -117,7 +152,7 @@ abstract class Element {
     }
 
     public static function get_element_class( stdClass $element ): string {
-        foreach( ElementTypes::cases() as $element_type ) {
+        foreach( ElementType::cases() as $element_type ) {
             if( $element_type->value === $element->_type ) {
                 return '\\Unconv\\CustomCms\\' . $element_type->name;
             }
@@ -128,12 +163,12 @@ abstract class Element {
 
     public function get_array(): array {
         $array = [
-            "_type" => $this->get_element_type(),
+            "_type" => $this->get_enum_value(),
         ];
 
         foreach( static::get_properties( $this ) as $property ) {
             $getter = "get_" . $property;
-            $value = $this->$getter();
+            $value = $this->$getter( ViewContext::Edit );
 
             if( $value instanceof Element ) {
                 $value = $value->get_array();
@@ -182,5 +217,18 @@ abstract class Element {
         return new static( ...$arguments );
     }
 
-    abstract public function get_element_type(): ElementTypes;
+    public function get_short_classname(): string {
+        $reflection = new ReflectionClass( $this );
+        return $reflection->getShortName();
+    }
+
+    public function get_enum_value(): int {
+        foreach( ElementType::cases() as $case ) {
+            if( $case->name === $this->get_short_classname() ) {
+                return $case->value;
+            }
+        }
+
+        throw new \Exception( "No element type found for " . __CLASS__ );
+    }
 }

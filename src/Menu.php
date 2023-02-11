@@ -20,8 +20,4 @@ class Menu extends Element
     public function get_close_text(): string {
         return $this->close_text;
     }
-
-    public function get_element_type(): ElementTypes {
-        return ElementTypes::Menu;
-    }
 }
