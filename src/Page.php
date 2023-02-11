@@ -1,7 +1,6 @@
 <?php
 namespace Unconv\CustomCms;
 use PDO;
-use stdClass;
 
 class Page
 {
@@ -87,27 +86,15 @@ class Page
 
         foreach( $elements as $element ) {
             $element = json_decode( $element['data'] );
-            $element_class = '\\Unconv\\CustomCms\\'.$this->get_element_class( $element );
+            $element_class = Element::get_element_class( $element );
             $element_list[] = $element_class::from_json( $element );
         }
 
         return $element_list;
     }
 
-    public function get_element_class( stdClass $element ) {
-        $type = $element->_type;
-
-        $types = [];
-
-        foreach( ElementTypes::cases() as $element_type ) {
-            $types[$element_type->value] = $element_type->name;
-        }
-
-        return $types[$type];
-    }
-
     public function render(): string {
-        $template = file_get_contents( __DIR__ . "/../templates/".$this->get_theme()."/elements/page.html" );
+        $template = file_get_contents( __DIR__ . "/../templates/solid-state/elements/page.html" );
 
         $top_content = "";
         $wrapper = "";
@@ -134,9 +121,5 @@ class Page
         ], $template );
 
         return $template;
-    }
-
-    private function get_theme(): string {
-        return "solid-state";
     }
 }

@@ -13,4 +13,5 @@ enum ElementTypes: int
     case Header = 7;
     case Menu = 8;
     case Spotlight = 9;
+    case MenuLink = 10;
 }
